@@ -3,3 +3,4 @@ Requests
 streamlit
 streamlit_card
 streamlit_extras
+validators
