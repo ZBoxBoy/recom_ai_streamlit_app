@@ -67,23 +67,17 @@ type = st.sidebar.radio(
 max = st.sidebar.slider('Max recommendation', 1, 10, 5,
                 help="Pick the maximum amount of recommendation that you want to be generated.")
 
-#Negative prompt checkboxes
-with st.sidebar.expander("Negative prompt"):
-    st.caption("What do you wish to exclude?")
-    old = st.checkbox('is old')
-    noNSFW = st.checkbox('contains NSFW scene')
-    noProf = st.checkbox('excesive profanity')
-    noGore = st.checkbox('excesive violence')
-    controv = st.checkbox('is controversial')
-
 #Submit button
 if st.sidebar.button('Generate',use_container_width=True):
-    if options == "":
-        alert = st.sidebar.warning('Title text field is empty', icon="⚠️")
+    is_empty = len(options) == 0
+    if is_empty:
+        alert = st.sidebar.warning('Genre selection field is empty', icon="⚠️")
         time.sleep(3)
         alert.empty()
     else:
         st.toast('Submitted for generation...')
+        if keywords == "":
+            keywords = "The best in the genre"
         with st.spinner('Generating recommendations, please wait... 🍵'):
             time.sleep(5)
             genre = ", ".join(options)

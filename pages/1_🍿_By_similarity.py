@@ -40,15 +40,6 @@ type = st.sidebar.radio(
 max = st.sidebar.slider('Max recommendation', 1, 10, 5,
                 help="Pick the maximum amount of recommendation that you want to be generated.")
 
-#Negative prompt checkboxes
-with st.sidebar.expander("Negative prompt"):
-    st.caption("What do you wish to exclude?")
-    old = st.checkbox('is old')
-    controv = st.checkbox('is controversial')
-    noProf = st.checkbox('excesive profanity')
-    noGore = st.checkbox('excesive violence')
-    noNSFW = st.checkbox('contains NSFW scene')
-
 #Submit button
 if st.sidebar.button('Generate',use_container_width=True):
     if title == "":
