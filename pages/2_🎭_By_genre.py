@@ -12,18 +12,9 @@ st.divider()
 
 submitted = False
 
-#Text area for user's keywords
-keywords = st.sidebar.text_area(
-"What would you like to see?",
-"Futuristic world, alien invasion, superhumans, action packed",
-max_chars=200, help="""Keywords describing the characteristic or element of movies/series (seperated with commas if multiple) 
-                        that you want the recommendations to have.
-                        E.g. "beautiful environments", "action packed", "high-stakes", etc.
-                        """)
-
 #Multiselect options for genre(s)
 options = st.sidebar.multiselect(
-                        'Movie/Series genre:',
+                        'Genre:',
                         [
                         'Action',
                         'Adventure',
@@ -56,6 +47,15 @@ options = st.sidebar.multiselect(
                         Choose the genre of the Movie/Series to be recommended (max 3). 
                         Note that not all of the generated recommendation will have all selected genre(s).""")
 
+#Text area for user's keywords
+keywords = st.sidebar.text_area(
+"What would you like to see?",
+"Futuristic world, alien invasion, superhumans, action packed",
+max_chars=200, help="""Keywords describing the characteristic or element of movies/series (seperated with commas if multiple) 
+                        that you want the recommendations to have.
+                        E.g. "beautiful environments", "action packed", "high-stakes", etc.
+                        """,placeholder="(Optional)")
+
 #Radio button for recommendation type
 type = st.sidebar.radio(
     "Recommendation type",
@@ -78,14 +78,19 @@ with st.sidebar.expander("Negative prompt"):
 
 #Submit button
 if st.sidebar.button('Generate',use_container_width=True):
-    st.toast('Submitted for generation...')
-    with st.spinner('Generating recommendations, please wait... 🍵'):
-        time.sleep(5)
-        genre = ", ".join(options)
-        recommendation = mtd.generate_genre(keywords,genre,type,max)
-        if recommendation:
-            submitted = True
-            st.toast('Recommendations generated!')
+    if options == "":
+        alert = st.sidebar.warning('Title text field is empty', icon="⚠️")
+        time.sleep(3)
+        alert.empty()
+    else:
+        st.toast('Submitted for generation...')
+        with st.spinner('Generating recommendations, please wait... 🍵'):
+            time.sleep(5)
+            genre = ", ".join(options)
+            recommendation = mtd.generate_genre(keywords,genre,type,max)
+            if recommendation:
+                submitted = True
+                st.toast('Recommendations generated!')
 
 #When submitted
 if submitted:

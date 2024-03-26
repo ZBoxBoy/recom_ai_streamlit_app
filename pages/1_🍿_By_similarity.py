@@ -51,15 +51,20 @@ with st.sidebar.expander("Negative prompt"):
 
 #Submit button
 if st.sidebar.button('Generate',use_container_width=True):
-    st.toast('Submitted for generation...')
-    if likings == "":
-        likings = f"the characteristic or element similar to the {title}"
-    with st.spinner('Generating recommendations, please wait... 🍵'):
-        time.sleep(5)
-        recommendation = mtd.generate_similarity(title,likings,type,max)
-        if recommendation:
-            submitted = True
-            st.toast('Recommendations generated!')
+    if title == "":
+        alert = st.sidebar.warning('Title text field is empty', icon="⚠️")
+        time.sleep(3)
+        alert.empty()
+    else:
+        st.toast('Submitted for generation...')
+        if likings == "":
+            likings = f"the characteristic or element similar to the {title}"
+        with st.spinner('Generating recommendations, please wait... 🍵'):
+            time.sleep(5)
+            recommendation = mtd.generate_similarity(title,likings,type,max)
+            if recommendation:
+                submitted = True
+                st.toast('Recommendations generated!')
 
 #When submitted
 if submitted:
