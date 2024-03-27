@@ -30,8 +30,7 @@ class Methods:
             {"role":"user",
               "content":user_prompt}
         ],
-        max_tokens=750,
-        temperature=0.7
+        max_tokens=750
         )
         recommendations = response.choices[0].message.content
         return recommendations
