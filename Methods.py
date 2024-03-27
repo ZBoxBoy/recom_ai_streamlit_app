@@ -31,7 +31,7 @@ class Methods:
               "content":user_prompt}
         ],
         max_tokens=750,
-        temperature=1.3
+        temperature=0.7
         )
         recommendations = response.choices[0].message.content
         return recommendations
