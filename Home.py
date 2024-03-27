@@ -19,10 +19,10 @@ def main():
             }
         }
     )   
-    add_logo("logo.png",120)
+    add_logo("logo.png",150)
     with st.container(border=True):
-        st.header("What is it for?")
-        st.subheader('🍿By similarity:',divider=True,anchor=False)
+        st.header("What does it do?")
+        st.subheader('🍿By similarity',divider=True,anchor=False)
         st.write("""Helps you generate recommendations of Movie/TV show that
                  are similar in terms of many aspects to a specific Movie/TV series title given and your likings.
                 """)
