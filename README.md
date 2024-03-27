@@ -1,3 +1,7 @@
+# **RECOM_AI**
+  >**AI-powered Movie/TV series recommender,**
+  >**leveraging AI for personalized recommendations**
+
 # What does it do?
 ## 🍿Recommend by similarity
 Helps you generate recommendations of Movie/TV show that are similar in terms of multiple aspects to the specific Movie/TV series title given and tailoring to your likings.
