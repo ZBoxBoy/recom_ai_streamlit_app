@@ -1,5 +1,5 @@
 import streamlit as st
-import base64
+import streamlit.components.v1 as components
 
 from streamlit_card import card
 from streamlit_extras.app_logo import add_logo
@@ -20,7 +20,19 @@ def main():
         }
     )   
     add_logo("logo.png",120)
-    
+    with st.container(border=True):
+        st.header("What is it for?")
+        st.subheader('🍿By similarity:',divider=True,anchor=False)
+        st.write("""Helps you generate recommendations of Movie/TV show that
+                 are similar in terms of many aspects to a specific Movie/TV series title given and your likings.
+                """)
+        st.subheader('🎭By genre',divider=True,anchor=False)
+        st.write("""Helps you generate recommendations of Movie/TV show based on the genre and keywords given.
+                """)
+        st.subheader('🔀Random:',divider=True,anchor=False)
+        st.write("""Generate random recommendations of Movie/TV show to help you discover new hits or hidden gems, 
+                 that you can add to your watch list.
+                """)
     
 if __name__ == "__main__":
     main()

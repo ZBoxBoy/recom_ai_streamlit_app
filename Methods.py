@@ -108,6 +108,17 @@ class Methods:
         
         return json_data
     
+    #Get youtube trailer
+    def getYT(title, year):
+        string = f'{title} ({year}) official trailer'
+        q = urllib.parse.quote(string)
+        url = f'''https://www.googleapis.com/youtube/v3/search?key=AIzaSyBK7Zu60km14ngSxS7ZEUX7QRYsM1hkcck&q={q}&\
+        type=video&parts=snippet&videoEmbeddable=true&maxResults=1'''
+        response = requests.get(url)
+        json_data = response.json()
+
+        video_id = json_data["items"][0]["id"]["videoId"]
+    
     #Create response component method
     def createComponent(name,year,rating,imageUrl,plot,type,id,director,genre):
         with st.container(border=True):
