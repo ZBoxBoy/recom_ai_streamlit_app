@@ -181,3 +181,58 @@ class Constants:
     "Spirited Away (2001)"
     ]
     """
+
+    PAGE_LAYOUT = """
+    <style>
+        button[title^=Exit]+div [data-testid=stImage]{
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+    </style>
+    """
+    GENRES = [
+            'Action',
+            'Adventure',
+            'Animation',
+            'Comedy',
+            'Crime',
+            'Documentary',
+            'Drama',
+            'Family',
+            'Fantasy',
+            'Film Noir',
+            'Game Show',
+            'Historical',
+            'Horror',
+            'Musical',
+            'Music',
+            'Mystery',
+            'Romance',
+            'Sci-fi',
+            'Short',
+            'Sport',
+            'Supernatural',
+            'Thriller',
+            'War',
+            'Western'
+            ]
+
+    DEFAULT_IMAGE = "https://www.reelviews.net/resources/img/default_poster.jpg"
+
+    JURASSIC_PARK_POSTER = "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_SX300.jpg"
+
+    JURASSIC_PARK_PLOT = "A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park's cloned dinosaurs to run loose."
+
+    def urlYT(key,q):
+        url = f'https://www.googleapis.com/youtube/v3/search?key={key}&q={q}&type=video&parts=snippet&videoEmbeddable=true&maxResults=1'
+        return url
+    
+    def ytEmbed(ytId):
+        embed = f"""<iframe width="560" height="315" src="https://www.youtube.com/embed/{ytId}" 
+                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                """
+        return embed

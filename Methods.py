@@ -2,6 +2,8 @@ import streamlit as st
 import urllib.parse
 import requests
 import json
+import streamlit.components.v1 as components
+import time
 
 from openai import OpenAI
 from Constants import Constants as ct
@@ -96,7 +98,6 @@ class Methods:
         recommendation = json.loads(Methods.ai_generate(s,u1,a1,u2,a2,u3,a3,prompt))
         return recommendation
 
-
     #Get data method
     def getData(title, year):
         apikey = st.secrets.OMDb_API_KEY
@@ -112,28 +113,99 @@ class Methods:
     def getYT(title, year):
         string = f'{title} ({year}) official trailer'
         q = urllib.parse.quote(string)
-        url = f'''https://www.googleapis.com/youtube/v3/search?key=AIzaSyBK7Zu60km14ngSxS7ZEUX7QRYsM1hkcck&q={q}&\
-        type=video&parts=snippet&videoEmbeddable=true&maxResults=1'''
+        key = st.secrets.YT_API_KEY
+        url = ct.urlYT(key,q)
         response = requests.get(url)
         json_data = response.json()
 
         video_id = json_data["items"][0]["id"]["videoId"]
-    
+        return video_id
+
     #Create response component method
     def createComponent(name,year,rating,imageUrl,plot,type,id,director,genre):
         with st.container(border=True):
+            st.header(f'{name} ({year})', anchor=False,divider=True)
             col1, col2= st.columns(2)  
             with col1:
                 st.image(imageUrl,use_column_width=True,)
             with col2:
-                st.header(name,anchor=False,divider=True)
-                st.markdown("📖 "+plot)
-                subcol1, subcol2= st.columns(2)  
-                st.markdown(f'📽️Type: <i>{type.title()}</i>',unsafe_allow_html=True)  
-                st.markdown(f'🎭Genre: <i>{genre}</i>',unsafe_allow_html=True)
-                st.markdown(f'🎬Director: <i>{director}</i>',unsafe_allow_html=True)
-                st.markdown(f'📅Release: <i>{year}</i>',unsafe_allow_html=True)
-                st.markdown(f'⭐IMDb rating: <i>{rating}/10</i>',unsafe_allow_html=True)
-                st.link_button("IMDb.com🔗",f'https://www.imdb.com/title/{id}',use_container_width=True)
+                st.write('📖Plot:')
+                st.write(plot)
+                st.markdown(f'📽️<b>Type: </b><i>{type.title()}</i>',unsafe_allow_html=True)  
+                st.markdown(f'🎭<b>Genre: </b><i>{genre}</i>',unsafe_allow_html=True)
+                st.markdown(f'🎬<b>Director: </b><i>{director}</i>',unsafe_allow_html=True)
+                st.markdown(f'⭐<b>IMDb rating: </b><i>{rating}/10</i>',unsafe_allow_html=True)
+                st.link_button("IMDb.com 🔗",f'https://www.imdb.com/title/{id}',use_container_width=True)
+                with st.popover('YouTube trailer 🎥',use_container_width=True):
+                    ytId = Methods.getYT(name,year)
+                    components.html(ct.ytEmbed(ytId),580,335)
+                    
+     #Create example component method
+    def createExample(name,year,rating,imageUrl,plot,type,id,director,genre,ytId):
+        with st.container(border=True):
+            st.subheader(f'{name} ({year})',anchor=False,divider=True)
+            col1, col2= st.columns(2)  
+            with col1:
+                st.image(imageUrl,use_column_width=True,)
+            with col2:
+                st.write('📖Plot:')
+                st.write(plot)
+                st.markdown(f'📽️<b>Type: </b><i>{type.title()}</i>',unsafe_allow_html=True)  
+                st.markdown(f'🎭<b>Genre: </b><i>{genre}</i>',unsafe_allow_html=True)
+                st.markdown(f'🎬<b>Director: </b><i>{director}</i>',unsafe_allow_html=True)
+                st.markdown(f'⭐<b>IMDb rating: </b><i>{rating}/10</i>',unsafe_allow_html=True)
+                st.link_button("IMDb.com 🔗",f'https://www.imdb.com/title/{id}',use_container_width=True)
+                with st.popover('YouTube trailer 🎥',use_container_width=True):
+                    components.html(ct.ytEmbed(ytId),580,335)
+                    
+    #Main output method
+    def mainOutput(recommendation):
+        with st.expander("📃View as list"):
+            list = "\n".join([f"{i+1}. {item}" for i, item in enumerate(recommendation)])
+            st.write(list)
+        count = 1
+        done = False
+        col1, col2 = st.columns(2)
+        for element in recommendation:
+                parts = element.split(" (")
+                t = parts[0]
+                y = element[element.find("(")+1 : element.find(")")]
+                data = Methods.getData(t,y)
+                if data["Response"] == "True":
+                    if data["Poster"] == "N/A":
+                        data["Poster"] = ct.DEFAULT_IMAGE
+                    if count == 1:
+                        with col1:
+                            Methods.createComponent(
+                            data["Title"],
+                            y,
+                            data["imdbRating"],
+                            data["Poster"],
+                            data["Plot"],
+                            data["Type"],
+                            data["imdbID"],
+                            data["Director"],
+                            data["Genre"]
+                            )
+                            count = 2
+                            done = True
+
+                    if count == 2 and done == False:
+                        with col2:
+                            Methods.createComponent(
+                            data["Title"],
+                            y,
+                            data["imdbRating"],
+                            data["Poster"],
+                            data["Plot"],
+                            data["Type"],
+                            data["imdbID"],
+                            data["Director"],
+                            data["Genre"]
+                            )
+                            count =1
+
+                    done = False
+                    
 
 

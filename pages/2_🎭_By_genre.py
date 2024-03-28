@@ -3,8 +3,16 @@ import time
 
 from streamlit_extras.app_logo import add_logo
 from Methods import Methods as mtd
+from Constants import Constants as ct
 
+st.set_page_config(
+    page_title="Recommend by genre",
+    page_icon="🎭",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 add_logo("logo.png",120)
+st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
 
 #Page title
 st.title("Generate the best movie/series recommendations from your favorite genre.🎭",anchor=False)
@@ -15,32 +23,7 @@ submitted = False
 #Multiselect options for genre(s)
 options = st.sidebar.multiselect(
                         'Genre:',
-                        [
-                        'Action',
-                        'Adventure',
-                        'Animation',
-                        'Comedy',
-                        'Crime',
-                        'Documentary',
-                        'Drama',
-                        'Family',
-                        'Fantasy',
-                        'Film Noir',
-                        'Game Show',
-                        'Historical',
-                        'Horror',
-                        'Musical',
-                        'Music',
-                        'Mystery',
-                        'Romance',
-                        'Sci-fi',
-                        'Short',
-                        'Sport',
-                        'Supernatural',
-                        'Thriller',
-                        'War',
-                        'Western'
-                        ],
+                        ct.GENRES,
                         ["Sci-fi","Action"],
                         max_selections=3,
                         help="""
@@ -88,28 +71,5 @@ if st.sidebar.button('Generate',use_container_width=True):
 
 #When submitted
 if submitted:
-    with st.expander("📃View as list"):
-        list = "\n".join([f"{i+1}. {item}" for i, item in enumerate(recommendation)])
-        st.write(list)
-    for element in recommendation:
-            parts = element.split(" (")
-            t = parts[0]
-            y = element[element.find("(")+1 : element.find(")")]
-            data = mtd.getData(t,y)
-            if data["Response"] == "True":
-                if data["Poster"] == "N/A":
-                    data["Poster"] = "https://www.reelviews.net/resources/img/default_poster.jpg"
-                mtd.createComponent(
-                data["Title"],
-                data["Released"],
-                data["imdbRating"],
-                data["Poster"],
-                data["Plot"],
-                data["Type"],
-                data["imdbID"],
-                data["Director"],
-                data["Genre"]
-                )
-
-    submitted = False
+    mtd.mainOutput(recommendation)
 

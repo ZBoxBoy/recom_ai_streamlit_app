@@ -3,8 +3,16 @@ import time
 
 from streamlit_extras.app_logo import add_logo
 from Methods import Methods as mtd
+from Constants import Constants as ct
 
+st.set_page_config(
+    page_title="Similarity",
+    page_icon="🍿",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 add_logo("logo.png",120)
+st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
 
 #Page title
 st.title("Generate the best movie/series recommendation that's similar to your favorite title.🍿",anchor=False)
@@ -22,7 +30,7 @@ title = st.sidebar.text_input('Title', 'Avatar (2009)',help="""
 likings = st.sidebar.text_area(
 "What do you like about it?",
 "Great world building, beautiful environments, incredibly lifelike exotic creatures, "
-"the imagery is visually, aurally and emotionally engulfing.",
+"the imagery is engulfing.",
 max_chars=200, help="""Briefly state what you like about the given title. 
                         Include the characteristic or element from your given title (seperated with commas if multiple) 
                         that you want the recommendations to have.
@@ -59,27 +67,4 @@ if st.sidebar.button('Generate',use_container_width=True):
 
 #When submitted
 if submitted:
-    with st.expander("📃View as list"):
-        list = "\n".join([f"{i+1}. {item}" for i, item in enumerate(recommendation)])
-        st.write(list)
-    for element in recommendation:
-            parts = element.split(" (")
-            t = parts[0]
-            y = element[element.find("(")+1 : element.find(")")]
-            data = mtd.getData(t,y)
-            if data["Response"] == "True":
-                if data["Poster"] == "N/A":
-                    data["Poster"] = "https://www.reelviews.net/resources/img/default_poster.jpg"
-                mtd.createComponent(
-                data["Title"],
-                data["Released"],
-                data["imdbRating"],
-                data["Poster"],
-                data["Plot"],
-                data["Type"],
-                data["imdbID"],
-                data["Director"],
-                data["Genre"]
-                )
-
-    submitted = False
+    mtd.mainOutput(recommendation)
