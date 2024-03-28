@@ -135,7 +135,10 @@ class Methods:
                 st.markdown(f'🎭<b>Genre: </b><i>{genre}</i>',unsafe_allow_html=True)
                 st.markdown(f'🎬<b>Director: </b><i>{director}</i>',unsafe_allow_html=True)
                 st.markdown(f'⭐<b>IMDb rating: </b><i>{rating}/10</i>',unsafe_allow_html=True)
+            coll1, coll2= st.columns(2)
+            with coll1:
                 st.link_button("IMDb.com 🔗",f'https://www.imdb.com/title/{id}',use_container_width=True)
+            with coll2:
                 with st.popover('YouTube trailer 🎥',use_container_width=True):
                     ytId = Methods.getYT(name,year)
                     components.html(ct.ytEmbed(ytId),580,335)
@@ -154,7 +157,10 @@ class Methods:
                 st.markdown(f'🎭<b>Genre: </b><i>{genre}</i>',unsafe_allow_html=True)
                 st.markdown(f'🎬<b>Director: </b><i>{director}</i>',unsafe_allow_html=True)
                 st.markdown(f'⭐<b>IMDb rating: </b><i>{rating}/10</i>',unsafe_allow_html=True)
+            coll1, coll2= st.columns(2)
+            with coll1:
                 st.link_button("IMDb.com 🔗",f'https://www.imdb.com/title/{id}',use_container_width=True)
+            with coll2:
                 with st.popover('YouTube trailer 🎥',use_container_width=True):
                     components.html(ct.ytEmbed(ytId),580,335)
                     
