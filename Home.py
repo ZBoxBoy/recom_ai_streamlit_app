@@ -1,5 +1,5 @@
 import streamlit as st
-
+import time
 from streamlit_extras.app_logo import add_logo
 from Methods import Methods as mtd
 from Constants import Constants as ct
@@ -58,17 +58,5 @@ def main():
         with coll3:
             st.write("")
 
-    with st.sidebar:
-        st.info('''  
-            Changes:  
-                (28/3/2023)    
-                • Wide page layout  
-                • Recommendation output displays in 2 columns  
-                • Added popover button to watch embedded Youtube trailer of movie/series  
-                • Using Youtube API HTTP request to get Youtube video  
-            ''', icon="ℹ️")
-
-        
-    
 if __name__ == "__main__":
     main()
