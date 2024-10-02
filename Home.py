@@ -10,8 +10,8 @@ def main():
         layout="wide",
         initial_sidebar_state="expanded",
     )
-    add_logo("logo.png",200)
-    st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
+    add_logo("logo.png",150)
+    # st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
     col1, col2 = st.columns([3,7])
     with col1:
         st.image("logo.png",use_column_width=True)
