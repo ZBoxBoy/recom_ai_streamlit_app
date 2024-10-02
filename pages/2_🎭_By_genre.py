@@ -11,8 +11,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-add_logo("logo.png",120)
-st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
+# add_logo("logo.png",120)
+# st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
 
 #Page title
 st.title("Generate the best movie/series recommendations from your favorite genre.🎭",anchor=False)
