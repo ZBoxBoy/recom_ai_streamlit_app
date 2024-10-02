@@ -184,12 +184,8 @@ class Constants:
 
     PAGE_LAYOUT = """
     <style>
-        button[title^=Exit]+div [data-testid=stImage]{
-            text-align: center;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
+        div [data-testid="stSidebarNavItems"]{
+            margin-top: 20%;
         }
     </style>
     """
