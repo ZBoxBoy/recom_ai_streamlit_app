@@ -187,7 +187,6 @@ class Constants:
         button[title^=Exit]+div [data-testid=stImage]{
             text-align: center;
             display: block;
-            margin-top: 50%;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
