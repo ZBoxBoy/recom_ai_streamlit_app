@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-# add_logo("logo.png",120)
+add_logo("logo.png",210)
 # st.markdown(ct.PAGE_LAYOUT, unsafe_allow_html=True)
 
 #Page title
